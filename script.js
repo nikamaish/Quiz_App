@@ -117,7 +117,7 @@ function showResult() {
   const quizContainer = document.getElementById("quiz-container");
 
   quizContainer.innerHTML =
-    `<h2 style="color: green; margin-bottom:50px">Test submitted Successfully</h2>` +
+    `<h2 style="color: green; margin-bottom:50px; margin-top:50px">Test submitted Successfully 🎉</h2>` +
     `<h3 style="color: blue;">Your Score is ${score} out of ${quizData.length}</h3>`;
 }
 

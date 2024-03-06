@@ -6,10 +6,10 @@ body {
 }
 
 #quiz-container {
-    max-width: 70rem;
-    height: 100vh;
+    max-width: 60rem;
+    height: 110vh;
     margin: auto;
-    margin-top: 15vh;
+    margin-top: 10vh;
     border-radius: 10px;
     background-color: white;
     box-shadow: 0 0 10px 0 #ccc;
@@ -61,15 +61,3 @@ body {
     color: red;
     margin-top: 25px;
 }
-#cameraFeed {
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    display: block;
-    /* background-color: green; */
-  }
-  #canvas {
-    /* width: 100%; Adjust as needed */
-    /* height: 100%; Adjust as needed */
-    display: block;
-  }
-  
