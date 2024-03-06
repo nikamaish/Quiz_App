@@ -9,15 +9,16 @@
 <body>
 
 <div id="quiz-container">
+  <div>
   <h3 id="timer" style="margin-bottom: 20px; text-align: end;margin-top: -20px;">Time Left: 00:01:00 </h3>
-  <video id="cameraFeed" width="200" height="150"></video>
-
+  <video autoplay="true" id="videoElement" width="200" height="150"></video>
+</div>
 
 
   <!-- <button id="start-btn" onclick="start()">Start</button>
   <button id="stop-btn" onclick="stop()" style="display:none;">Stop</button>
   <button id="capture-btn" onclick="capture()" style="display:none;">Capture</button> -->
-  <canvas id="canvas" width="200" height="150" style="display:none;"></canvas>
+  <!-- <canvas id="canvas" width="200" height="150" style="display:none;"></canvas> -->
   
     <div id="question" class="question"></div>
     <div id="options" class="options"></div>

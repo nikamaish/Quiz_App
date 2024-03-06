@@ -121,32 +121,20 @@ function showResult() {
     `<h3 style="color: blue;">Your Score is ${score} out of ${quizData.length}</h3>`;
 }
 
-let videoElement;
-let canvas;
+let video = document.getElementById("videoElement");
 
-function startCamera() {
-  videoElement = document.getElementById('cameraFeed');
-  canvas = document.getElementById('canvas');
-  const constraints = { video: { facingMode: 'user' } };
-
-  navigator.mediaDevices.getUserMedia(constraints)
-    .then((stream) => {
-      videoElement.srcObject = stream;
-      videoElement.style.display = 'block';
-
-      const context = canvas.getContext('2d');
-
-      function drawFrame() {
-        context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-        requestAnimationFrame(drawFrame);
-      }
-      
-
-      drawFrame();
+if (navigator.mediaDevices.getUserMedia) {
+  navigator.mediaDevices
+    .getUserMedia({ video: true })
+    .then(function (stream) {
+      video.srcObject = stream;
     })
-    .catch((error) => {
-      console.error('Error accessing camera:', error);
+    .catch(function (err0r) {
+      console.log("Something went wrong!");
     });
+}
+else {
+  console.log('getUserMedia not supported on your browser!');
 }
 
 startTimer();
