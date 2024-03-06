@@ -60,6 +60,9 @@ function selectOption(index) {
   // index is the parameter of the selectOption function
   const options = document.querySelectorAll(".option");
   // it selects all the options
+
+  const errorMessageElement = document.getElementById("error-message");
+
   options.forEach((option, i) => {
     // it iterates through all the options
     option.classList.remove("selected");
@@ -73,40 +76,45 @@ function selectOption(index) {
 
     if (i === index) {
       option.classList.add("selected");
+
+      if (errorMessageElement) {
+        errorMessageElement.textContent = "";
+      }
     }
   });
 }
 
 function nextQuestion() {
-    const selectedOption = document.querySelector('.option.selected');
-    const errorMessageElement = document.getElementById('error-message');
-    if (selectedOption) {
-        const selectedAnswer = selectedOption.textContent;
-        const currentQuizData = quizData[currentQuestion];
+  const selectedOption = document.querySelector(".option.selected");
+  const errorMessageElement = document.getElementById("error-message");
 
-        if (selectedAnswer === currentQuizData.correctAnswer) {
-            score++;
-        }
+  if (selectedOption) {
+    const selectedAnswer = selectedOption.textContent;
+    const currentQuizData = quizData[currentQuestion];
 
-        currentQuestion++;
+    if (selectedAnswer === currentQuizData.correctAnswer) {
+      score++;
+    }
 
-        if (currentQuestion < quizData.length) {
-            loadQuestion();
-        } else {
-            showResult();
-        }
+    currentQuestion++;
+
+    if (currentQuestion < quizData.length) {
+      loadQuestion();
     } else {
-      if (errorMessageElement) {
-        errorMessageElement.textContent = "Please select an option";
+      showResult();
     }
+  } 
+  else {
+    if (errorMessageElement) {
+      errorMessageElement.textContent = "Please select an option";
     }
+  }
 }
 
 function showResult() {
-    const quizContainer = document.getElementById('quiz-container');
-    quizContainer.innerHTML = `<h2>Your Score is ${score} out of ${quizData.length}</h2>`;
-
-  }
+  const quizContainer = document.getElementById("quiz-container");
+  quizContainer.innerHTML = `<h2>Your Score is ${score} out of ${quizData.length}</h2>`;
+}
 
 loadQuestion();
 // this is to load the first question when the page is loaded
