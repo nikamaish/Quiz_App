@@ -13,20 +13,17 @@ const quizData = [
 ];
 
 let currentQuestion = 0;
-// this is the current question number, if i removed this I wont see questions on the page because the loadQuestion function will not be able to access the currentQuestion variable
-
 let score = 0;
 
 let timer;
-
-// Set the initial timer value in seconds
 let timeLeft = 60;
 
 function startTimer() {
   let startTime;
+
   function updateTimer(timestamp) {
     if (!startTime) startTime = timestamp;
-    
+
     const elapsedMilliseconds = timestamp - startTime;
     const elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
     const remainingSeconds = Math.max(0, timeLeft - elapsedSeconds);
@@ -35,85 +32,50 @@ function startTimer() {
     const minutes = Math.floor((remainingSeconds % 3600) / 60);
     const seconds = remainingSeconds % 60;
 
-    // Format the time with leading zeros
     const formattedTime = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
 
-    // Update the timer display
     document.getElementById("timer").textContent = `Time Left: ${formattedTime}`;
 
-    // Check if the time has run out
     if (remainingSeconds === 0) {
-      showResult(); // Show the result when time runs out
+      showResult();
     } else {
       requestAnimationFrame(updateTimer);
     }
   }
 
-  // Initial call to start the timer
   requestAnimationFrame(updateTimer);
 }
-
 
 function padZero(value) {
   return value < 10 ? `0${value}` : value;
 }
 
 function loadQuestion() {
-  // Get the HTML elements for the question and options
   const questionElement = document.getElementById("question");
   const optionsElement = document.getElementById("options");
 
-  // Get the current question data from the quizData array based on the current question index
   const currentQuizData = quizData[currentQuestion];
 
-  // Set the text content of the question element to the current question's text
-  // currentQuizData.question is accessing the question property of the currentQuizData object.
   questionElement.textContent = currentQuizData.question;
-
-  // Clear the HTML content of the options element
   optionsElement.innerHTML = "";
-  // this is to clear the options from the previous question
-
-  // Iterate through the options of the current question
-  // The options are dynamically created for each question because the set of options varies for different questions. In a quiz application, questions may have different sets of possible answers, and this dynamic creation of options allows the app to adapt to those variations.
 
   currentQuizData.options.forEach((option, index) => {
-    // Create a new <div> element for each option
     const optionElement = document.createElement("div");
-
-    // Set the class name of the option element to 'option'
     optionElement.className = "option";
-
-    // Set the text content of the option element to the current option's text
     optionElement.textContent = option;
-    // here option is parameter of the forEach method, it is the current option in the iteration
 
-    // Attach an 'onclick' event listener to the option element, calling the 'selectOption' function with the current index
     optionElement.onclick = () => selectOption(index);
 
-    // Append the option element to the options container
     optionsElement.appendChild(optionElement);
-    // it appends the all the options to the options container, as it is iterating through the options at the last it will display all the options
   });
 }
 
 function selectOption(index) {
-  // index is the parameter of the selectOption function
   const options = document.querySelectorAll(".option");
-  // it selects all the options
-
   const errorMessageElement = document.getElementById("error-message");
 
   options.forEach((option, i) => {
-    // it iterates through all the options
     option.classList.remove("selected");
-    // This line removes the 'selected' class from each option. This is done for all options to ensure that only the currently selected option will have the 'selected' class.
-
-    // Exactly. When a user clicks on an option, the selectOption function is triggered, and within that function, the selected class is added to the clicked option.
-
-    // classList is a property of the Element interface in the Document Object Model (DOM). It represents the classes of an HTML element and provides methods to manipulate them.
-
-    // The classList property is useful for working with the classes of an HTML element, allowing you to easily add, remove, toggle, or check for the presence of specific classes.
 
     if (i === index) {
       option.classList.add("selected");
@@ -159,6 +121,34 @@ function showResult() {
     `<h3 style="color: blue;">Your Score is ${score} out of ${quizData.length}</h3>`;
 }
 
+let videoElement;
+let canvas;
+
+function startCamera() {
+  videoElement = document.getElementById('cameraFeed');
+  canvas = document.getElementById('canvas');
+  const constraints = { video: { facingMode: 'user' } };
+
+  navigator.mediaDevices.getUserMedia(constraints)
+    .then((stream) => {
+      videoElement.srcObject = stream;
+      videoElement.style.display = 'block';
+
+      const context = canvas.getContext('2d');
+
+      function drawFrame() {
+        context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+        requestAnimationFrame(drawFrame);
+      }
+      
+
+      drawFrame();
+    })
+    .catch((error) => {
+      console.error('Error accessing camera:', error);
+    });
+}
+
 startTimer();
 loadQuestion();
-// this is to load the first question when the page is loaded
+startCamera();
