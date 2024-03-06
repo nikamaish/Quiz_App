@@ -17,6 +17,47 @@ let currentQuestion = 0;
 
 let score = 0;
 
+let timer;
+
+// Set the initial timer value in seconds
+let timeLeft = 60;
+
+function startTimer() {
+  let startTime;
+  function updateTimer(timestamp) {
+    if (!startTime) startTime = timestamp;
+    
+    const elapsedMilliseconds = timestamp - startTime;
+    const elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
+    const remainingSeconds = Math.max(0, timeLeft - elapsedSeconds);
+
+    const hours = Math.floor(remainingSeconds / 3600);
+    const minutes = Math.floor((remainingSeconds % 3600) / 60);
+    const seconds = remainingSeconds % 60;
+
+    // Format the time with leading zeros
+    const formattedTime = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+
+    // Update the timer display
+    document.getElementById("timer").textContent = `Time Left: ${formattedTime}`;
+
+    // Check if the time has run out
+    if (remainingSeconds === 0) {
+      showResult(); // Show the result when time runs out
+    } else {
+      requestAnimationFrame(updateTimer);
+    }
+  }
+
+  // Initial call to start the timer
+  requestAnimationFrame(updateTimer);
+}
+
+
+function padZero(value) {
+  return value < 10 ? `0${value}` : value;
+}
+
 function loadQuestion() {
   // Get the HTML elements for the question and options
   const questionElement = document.getElementById("question");
@@ -103,8 +144,7 @@ function nextQuestion() {
     } else {
       showResult();
     }
-  } 
-  else {
+  } else {
     if (errorMessageElement) {
       errorMessageElement.textContent = "Please select an option";
     }
@@ -113,10 +153,12 @@ function nextQuestion() {
 
 function showResult() {
   const quizContainer = document.getElementById("quiz-container");
-  
-  quizContainer.innerHTML = `<h1 style="color: green; margin-bottom:50px">Submit Successfully</h1>` +
-  `<h2 style="color: blue;">Your Score is ${score} out of ${quizData.length}</h2>`;
+
+  quizContainer.innerHTML =
+    `<h2 style="color: green; margin-bottom:50px">Test submitted Successfully</h2>` +
+    `<h3 style="color: blue;">Your Score is ${score} out of ${quizData.length}</h3>`;
 }
 
+startTimer();
 loadQuestion();
 // this is to load the first question when the page is loaded
