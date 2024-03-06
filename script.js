@@ -15,7 +15,7 @@ const quizData = [
 let currentQuestion = 0;
 // this is the current question number, if i removed this I wont see questions on the page because the loadQuestion function will not be able to access the currentQuestion variable
 
-// let score = 0;
+let score = 0;
 
 function loadQuestion() {
   // Get the HTML elements for the question and options
@@ -101,7 +101,7 @@ function nextQuestion() {
 
 function showResult() {
     const quizContainer = document.getElementById('quiz-container');
-    quizContainer.innerHTML = `<h2>Your Score: ${score} out of ${quizData.length}</h2>`;
+    quizContainer.innerHTML = `<h2>Your Score is ${score} out of ${quizData.length}</h2>`;
 }
 
 loadQuestion();
