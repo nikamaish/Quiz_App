@@ -79,6 +79,7 @@ function selectOption(index) {
 
 function nextQuestion() {
     const selectedOption = document.querySelector('.option.selected');
+    const errorMessageElement = document.getElementById('error-message');
     if (selectedOption) {
         const selectedAnswer = selectedOption.textContent;
         const currentQuizData = quizData[currentQuestion];
@@ -95,14 +96,17 @@ function nextQuestion() {
             showResult();
         }
     } else {
-        alert("Please select an option");
+      if (errorMessageElement) {
+        errorMessageElement.textContent = "Please select an option";
+    }
     }
 }
 
 function showResult() {
     const quizContainer = document.getElementById('quiz-container');
     quizContainer.innerHTML = `<h2>Your Score is ${score} out of ${quizData.length}</h2>`;
-}
+
+  }
 
 loadQuestion();
 // this is to load the first question when the page is loaded
