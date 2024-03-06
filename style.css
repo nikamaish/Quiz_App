@@ -47,7 +47,7 @@ body {
 }
 
 #next-btn {
-    margin-top: 10vh;
+    margin-top: 5vh;
     padding: 20px;
     background-color: #4caf50;
     border-radius: 5px;
@@ -55,3 +55,8 @@ body {
     border: none;
     cursor: pointer;
 } 
+
+#error-message {
+    color: red;
+    margin-top: 25px;
+}

@@ -113,7 +113,9 @@ function nextQuestion() {
 
 function showResult() {
   const quizContainer = document.getElementById("quiz-container");
-  quizContainer.innerHTML = `<h2>Your Score is ${score} out of ${quizData.length}</h2>`;
+  
+  quizContainer.innerHTML = `<h1 style="color: green; margin-bottom:50px">Submit Successfully</h1>` +
+  `<h2 style="color: blue;">Your Score is ${score} out of ${quizData.length}</h2>`;
 }
 
 loadQuestion();
