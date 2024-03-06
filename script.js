@@ -1,51 +1,74 @@
-const questionContainer = document.getElementById('question-container');
-const answerButtons = document.getElementById('answer-buttons');
-const nextButton = document.getElementById('next-button');
+const quizData = [
+    {
+        question: "What is the capital of France?",
+        options: ["Berlin", "Paris", "Madrid", "Rome"],
+        correctAnswer: "Paris"
+    },
+    {
+        question: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Mars", "Venus", "Jupiter"],
+        correctAnswer: "Mars"
+    },
+    // Add more questions as needed
+];
 
-let currentQuestionIndex = 0;
 
-function startQuiz() {
-    currentQuestionIndex = 0;
-    nextButton.classList.add('hide');
-    showQuestion(questions[currentQuestionIndex]);
-}
 
-function showQuestion(question) {
-    questionContainer.innerText = question.question;
-    resetAnswerButtons();
+let currentQuestion = 0;
+let score = 0;
 
-    question.answers.forEach(answer => {
-        const button = document.createElement('button');
-        button.innerText = answer.text;
-        button.classList.add('btn');
-        button.addEventListener('click', () => selectAnswer(answer));
-        answerButtons.appendChild(button);
+function loadQuestion() {
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    const currentQuizData = quizData[currentQuestion];
+
+    questionElement.textContent = currentQuizData.question;
+    optionsElement.innerHTML = '';
+
+    currentQuizData.options.forEach((option, index) => {
+        const optionElement = document.createElement('div');
+        optionElement.className = 'option';
+        optionElement.textContent = option;
+        optionElement.onclick = () => selectOption(index);
+        optionsElement.appendChild(optionElement);
     });
 }
 
-function resetAnswerButtons() {
-    while (answerButtons.firstChild) {
-        answerButtons.removeChild(answerButtons.firstChild);
-    }
+function selectOption(index) {
+    const options = document.querySelectorAll('.option');
+    options.forEach((option, i) => {
+        option.classList.remove('selected');
+        if (i === index) {
+            option.classList.add('selected');
+        }
+    });
 }
 
-function selectAnswer(answer) {
-    // Add your logic to handle the selected answer (e.g., scoring)
-    // For simplicity, let's just log the selected answer to the console
-    console.log(answer.text);
-    nextButton.classList.remove('hide');
-}
+// function nextQuestion() {
+//     const selectedOption = document.querySelector('.option.selected');
+//     if (selectedOption) {
+//         const selectedAnswer = selectedOption.textContent;
+//         const currentQuizData = quizData[currentQuestion];
 
-function nextQuestion() {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-        showQuestion(questions[currentQuestionIndex]);
-        nextButton.classList.add('hide');
-    } else {
-        // Quiz is finished, you can add your completion logic here
-        alert('Quiz completed!');
-    }
-}
+//         if (selectedAnswer === currentQuizData.correctAnswer) {
+//             score++;
+//         }
 
-// Start the quiz when the page loads
-startQuiz();
+//         currentQuestion++;
+
+//         if (currentQuestion < quizData.length) {
+//             loadQuestion();
+//         } else {
+//             showResult();
+//         }
+//     } else {
+//         alert("Please select an option");
+//     }
+// }
+
+// function showResult() {
+//     const quizContainer = document.getElementById('quiz-container');
+//     quizContainer.innerHTML = `<h2>Your Score: ${score} out of ${quizData.length}</h2>`;
+// }
+
+loadQuestion();
