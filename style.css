@@ -65,7 +65,7 @@ body {
     border: 2px solid #ccc;
     border-radius: 5px;
     display: block;
-    background-color: green;
+    /* background-color: green; */
   }
   #canvas {
     /* width: 100%; Adjust as needed */
