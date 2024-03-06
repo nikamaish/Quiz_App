@@ -39,8 +39,10 @@ body {
     cursor: pointer;
 }
 
-.option.selected {
-    background-color: #4caf50;
+.option.selected {      
+            
+    /* background-color: #4caf50; */
+    background-color: rgb(1, 171, 250);
     color: white;
 }
 
