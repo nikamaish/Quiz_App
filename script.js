@@ -5,9 +5,9 @@ const quizData = [
     correctAnswer: "Paris",
   },
   {
-    question: "What is the capital of India",
-    options: ["Berlin", "Paris", "Madrid", "Rome"],
-    correctAnswer: "Paris",
+    question: "Which planet is known as the Red Planet?",
+    options: ["Earth", "Mars", "Venus", "Jupiter"],
+    correctAnswer: "Mars",
   },
  
   
@@ -18,6 +18,9 @@ let score = 0;
 
 let timer;//
 let timeLeft = 60;
+
+
+
 
 function startTimer() {
   let startTime;
@@ -47,9 +50,15 @@ function startTimer() {
   requestAnimationFrame(updateTimer);
 }
 
+
+
+
 function padZero(value) {
   return value < 10 ? `0${value}` : value;
 }
+
+
+
 
 function loadQuestion() {
   const questionElement = document.getElementById("question");
@@ -73,6 +82,9 @@ function loadQuestion() {
   updateQuestionIndicators();
 }
 
+
+
+
 function selectOption(index) {
   const options = document.querySelectorAll(".option");
   const errorMessageElement = document.getElementById("error-message");
@@ -90,6 +102,11 @@ function selectOption(index) {
   });
 }
 
+
+
+
+// Add these functions to your script.js file
+
 function nextQuestion() {
   const selectedOption = document.querySelector(".option.selected");
   const errorMessageElement = document.getElementById("error-message");
@@ -103,11 +120,12 @@ function nextQuestion() {
     }
 
     currentQuestion++;
+    updateQuestionIndicators();
 
     if (currentQuestion < quizData.length) {
       loadQuestion();
     } else {
-      showResult();
+      disableNextButton();
     }
   } else {
     if (errorMessageElement) {
@@ -115,6 +133,58 @@ function nextQuestion() {
     }
   }
 }
+
+
+
+function disableNextButton() {
+  const nextButton = document.getElementById("next-btn");
+  if (nextButton) {
+    nextButton.disabled = true;
+  }
+}
+
+
+function updateQuestionIndicators() {
+  const quizProgress = document.getElementById("quiz-progress");
+  quizProgress.innerHTML = ""; // Clear existing indicators
+
+  quizData.forEach((_, index) => {
+    const indicator = document.createElement("div");
+    indicator.className = "question-indicator";
+    indicator.textContent = index + 1; // Display question number
+
+    if (index < currentQuestion) {
+      indicator.classList.add("attempted");
+    }
+    quizProgress.appendChild(indicator);
+
+    // if (index < quizData.length - 1) {
+    //   const spacing = document.createElement("div");
+    //   spacing.className = "indicator-spacing";
+    //   quizProgress.appendChild(spacing);
+    // }
+  });
+}
+
+
+function submitQuiz() {
+  Swal.fire({
+    title: 'Are you sure you want to submit the test?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, submit it!',
+    cancelButtonText: 'No, cancel',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      showResult();
+    }
+  });
+}
+
+
+
+
 
 function showResult() {
   const quizContainer = document.getElementById("quiz-container");
@@ -142,58 +212,7 @@ else {
   console.log('getUserMedia not supported on your browser!');
 }
 
+
 startTimer();
 loadQuestion();
 startCamera();
-
-
-// Add these functions to your script.js file
-
-function updateQuestionIndicators() {
-  const quizProgress = document.getElementById("quiz-progress");
-  quizProgress.innerHTML = ""; // Clear existing indicators
-
-  quizData.forEach((_, index) => {
-    const indicator = document.createElement("div");
-    indicator.className = "question-indicator";
-    indicator.textContent = index + 1; // Display question number
-
-    if (index < currentQuestion) {
-      indicator.classList.add("attempted");
-    }
-    quizProgress.appendChild(indicator);
-
-    // if (index < quizData.length - 1) {
-    //   const spacing = document.createElement("div");
-    //   spacing.className = "indicator-spacing";
-    //   quizProgress.appendChild(spacing);
-    // }
-  });
-}
-
-function nextQuestion() {
-  const selectedOption = document.querySelector(".option.selected");
-  const errorMessageElement = document.getElementById("error-message");
-
-  if (selectedOption) {
-    const selectedAnswer = selectedOption.textContent;
-    const currentQuizData = quizData[currentQuestion];
-
-    if (selectedAnswer === currentQuizData.correctAnswer) {
-      score++;
-    }
-
-    currentQuestion++;
-    updateQuestionIndicators();
-
-    if (currentQuestion < quizData.length) {
-      loadQuestion();
-    } else {
-      showResult();
-    }
-  } else {
-    if (errorMessageElement) {
-      errorMessageElement.textContent = "Please select an option";
-    }
-  }
-}

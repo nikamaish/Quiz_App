@@ -49,12 +49,15 @@ body {
 
 #next-btn {
     margin-top: 5vh;
+    margin-right: 20px;
     padding: 20px;
     background-color: #4caf50;
     border-radius: 5px;
     color: white;
     border: none;
     cursor: pointer;
+    font-size: 1.2em;
+
 } 
 
 #error-message {
@@ -84,6 +87,17 @@ body {
     font-size: 1.5em;
     color: black;
     font-family: 'Lucida Sans';        
+  }
+
+  #submit-btn{
+    margin-top: 5vh;
+    padding: 20px;
+    background-color: rgb(245, 45, 45);
+    border-radius: 5px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
   }
 
   
