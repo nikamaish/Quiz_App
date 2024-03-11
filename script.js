@@ -68,6 +68,8 @@ function loadQuestion() {
 
     optionsElement.appendChild(optionElement);
   });
+
+  updateQuestionIndicators();
 }
 
 function selectOption(index) {
@@ -119,6 +121,8 @@ function showResult() {
   quizContainer.innerHTML =
     `<h2 style="color: green; margin-bottom:50px; margin-top:50px">Test submitted Successfully 🎉</h2>` +
     `<h3 style="color: blue;">Your Score is ${score} out of ${quizData.length}</h3>`;
+    quizContainer.style.height= "50vh";
+    quizContainer.style.width= "30rem";
 }
 
 let video = document.getElementById("videoElement");
@@ -140,3 +144,49 @@ else {
 startTimer();
 loadQuestion();
 startCamera();
+
+
+// Add these functions to your script.js file
+
+function updateQuestionIndicators() {
+  const quizProgress = document.getElementById("quiz-progress");
+  quizProgress.innerHTML = ""; // Clear existing indicators
+
+  quizData.forEach((_, index) => {
+    const indicator = document.createElement("div");
+    indicator.className = "question-indicator";
+    indicator.textContent = index + 1; // Display question number
+
+    if (index < currentQuestion) {
+      indicator.classList.add("attempted");
+    }
+    quizProgress.appendChild(indicator);
+  });
+}
+
+function nextQuestion() {
+  const selectedOption = document.querySelector(".option.selected");
+  const errorMessageElement = document.getElementById("error-message");
+
+  if (selectedOption) {
+    const selectedAnswer = selectedOption.textContent;
+    const currentQuizData = quizData[currentQuestion];
+
+    if (selectedAnswer === currentQuizData.correctAnswer) {
+      score++;
+    }
+
+    currentQuestion++;
+    updateQuestionIndicators();
+
+    if (currentQuestion < quizData.length) {
+      loadQuestion();
+    } else {
+      showResult();
+    }
+  } else {
+    if (errorMessageElement) {
+      errorMessageElement.textContent = "Please select an option";
+    }
+  }
+}

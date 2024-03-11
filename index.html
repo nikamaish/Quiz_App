@@ -9,9 +9,13 @@
 <body>
 
 <div id="quiz-container">
-  <div style="display: flex; align-items: center; justify-content: end;">
-  <h3 id="timer" style=" text-align: end;margin-top: -20px;">Time Left: 00:01:00 </h3>
+
+
+  <div style="display: flex; align-items: center; justify-content:space-around;">
+    <div id="quiz-progress" class="quiz-progress"></div>
+  <h3 id="timer" style=" text-align: end;">Time Left: 00:01:00 </h3>
   <video autoplay="true" id="videoElement" width="250" height="200" style="margin-top: -30px; margin-left: 20px;" ></video>
+  
 </div>
 
   
@@ -20,6 +24,7 @@
     <div id="error-message" style="color: red;"></div>
 
     <button id="next-btn" onclick="nextQuestion()">Next</button>
+
 </div>
 
 <script src="script.js"></script>

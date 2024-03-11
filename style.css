@@ -61,3 +61,23 @@ body {
     color: red;
     margin-top: 25px;
 }
+
+.question-indicator {
+    width: 20px;
+    padding: 20px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin: 0 5px;
+    display: inline-block;
+  }
+  
+  .question-indicator.attempted {
+    background-color: #4caf50; /* Green color for attempted questions */
+  }
+
+  #timer{
+    /* margin-top: 10vh; */
+    font-size: 1.5em;
+    color: black;
+  }
