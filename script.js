@@ -136,12 +136,6 @@ function nextQuestion() {
 
 
 
-function disableNextButton() {
-  const nextButton = document.getElementById("next-btn");
-  if (nextButton) {
-    nextButton.disabled = true;
-  }
-}
 
 
 function updateQuestionIndicators() {
@@ -178,6 +172,7 @@ function submitQuiz() {
   }).then((result) => {
     if (result.isConfirmed) {
       showResult();
+      stopCamera();
     }
   });
 }
@@ -197,20 +192,31 @@ function showResult() {
 }
 
 let video = document.getElementById("videoElement");
+let mediaStream;
 
 if (navigator.mediaDevices.getUserMedia) {
   navigator.mediaDevices
     .getUserMedia({ video: true })
     .then(function (stream) {
       video.srcObject = stream;
+      mediaStream = stream; // Store the media stream
     })
     .catch(function (err0r) {
       console.log("Something went wrong!");
     });
-}
-else {
+} else {
   console.log('getUserMedia not supported on your browser!');
 }
+
+// ... (Your existing code)
+
+function stopCamera() {
+  if (mediaStream) {
+    const tracks = mediaStream.getTracks();
+    tracks.forEach(track => track.stop());
+  }
+}
+
 
 
 startTimer();
