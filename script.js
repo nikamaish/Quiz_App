@@ -5,17 +5,18 @@ const quizData = [
     correctAnswer: "Paris",
   },
   {
-    question: "Which planet is known as the Red Planet?",
-    options: ["Earth", "Mars", "Venus", "Jupiter"],
-    correctAnswer: "Mars",
+    question: "What is the capital of India",
+    options: ["Berlin", "Paris", "Madrid", "Rome"],
+    correctAnswer: "Paris",
   },
-  // Add more questions as needed
+ 
+  
 ];
 
 let currentQuestion = 0;
 let score = 0;
 
-let timer;
+let timer;//
 let timeLeft = 60;
 
 function startTimer() {
@@ -161,6 +162,12 @@ function updateQuestionIndicators() {
       indicator.classList.add("attempted");
     }
     quizProgress.appendChild(indicator);
+
+    // if (index < quizData.length - 1) {
+    //   const spacing = document.createElement("div");
+    //   spacing.className = "indicator-spacing";
+    //   quizProgress.appendChild(spacing);
+    // }
   });
 }
 
