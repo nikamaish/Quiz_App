@@ -42,6 +42,7 @@ function startTimer() {
     if (remainingSeconds === 0) {
       showResult();
       stopCamera();
+      Swal.close();
 
     } else {
       requestAnimationFrame(updateTimer);
@@ -153,6 +154,9 @@ function submitQuiz() {
     confirmButtonText: "Yes, submit it!",
     cancelButtonText: "No, cancel",
     reverseButtons: true,
+    customClass: {
+      content: 'responsive-swal-content',
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       showResult();
@@ -161,6 +165,7 @@ function submitQuiz() {
   });
 }
 
+
 function showResult() {
   const quizContainer = document.getElementById("quiz-container");
 
@@ -168,7 +173,7 @@ function showResult() {
     `<h2 style="color: green; margin-bottom:50px; margin-top:50px">Test submitted Successfully 🎉</h2>` +
     `<h3 style="color: blue;">Your Score is ${score} out of ${quizData.length}</h3>`;
   quizContainer.style.height = "50vh";
-  quizContainer.style.width = "30rem";
+  quizContainer.style.width = "15rem";
 }
 
 
