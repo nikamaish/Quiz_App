@@ -90,9 +90,13 @@ body {
   }
 
    @media screen and (max-width: 600px){
+    
+    #quiz-container{
+    height: 70vh;
+    }
     #videoElement{
         width: 150px;
-        height: 100px;
+        height: 110px;
     }
     .question-indicator{
         width: 15px;

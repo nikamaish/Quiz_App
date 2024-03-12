@@ -41,6 +41,8 @@ function startTimer() {
 
     if (remainingSeconds === 0) {
       showResult();
+      stopCamera();
+
     } else {
       requestAnimationFrame(updateTimer);
     }
