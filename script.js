@@ -147,6 +147,18 @@ function updateQuestionIndicators() {
 }
 
 function submitQuiz() {
+
+  const selectedOption = document.querySelector(".option.selected");
+  if (selectedOption) {
+    const selectedAnswer = selectedOption.textContent;
+    const currentQuizData = quizData[currentQuestion];
+
+    if (selectedAnswer === currentQuizData.correctAnswer) {
+      score++;
+    }
+  }
+
+
   Swal.fire({
     title: "Are you sure you want to submit the test?",
     icon: "warning",
@@ -213,6 +225,8 @@ function stopCamera() {
   if (mediaStream) {
     const tracks = mediaStream.getTracks();
     tracks.forEach((track) => track.stop());
+
+   
   }
 }
 
